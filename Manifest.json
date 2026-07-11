@@ -1,0 +1,17 @@
+{
+  "short_name": "Dhruv App",
+  "name": "Dhruv is winning",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3112/3112946.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "Index.html",
+  "background_color": "#f0f4f8",
+  "theme-color": "#764ba2",
+  "display": "standalone",
+  "orientation": "portrait"
+}
