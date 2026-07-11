@@ -7,45 +7,53 @@
     
     <!-- App Manifest and Service Worker Links (Capitalized for Mobile) -->
     <link rel="manifest" href="Manifest.json">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#4f46e5">
     
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fb;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
             margin: 0;
-            padding: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .container {
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
         h1 {
             text-align: center;
-            color: #2c3e50;
-            margin-top: 0;
+            color: #6366f1;
+            font-size: 28px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: 800;
         }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin: 0 0 20px 0;
+            font-size: 14px;
+        }
+        
+        /* Highlighted Daily Quote Section */
         .quote-box {
             background-color: #f0f7ff;
             border-left: 5px solid #3b82f6;
-            padding: 12px;
+            padding: 14px;
             margin-bottom: 20px;
-            border-radius: 6px;
+            border-radius: 8px;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         .quote-title {
             margin: 0 0 4px 0;
             color: #3b82f6;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
@@ -56,111 +64,276 @@
             font-weight: 600;
             color: #1e293b;
             font-style: italic;
+            line-height: 1.4;
         }
+
+        /* Score Card Setup */
         .score-card {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 24px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.2);
         }
         .score-label {
-            font-size: 14px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0.9;
+            opacity: 0.85;
+            font-weight: 600;
         }
         .score-value {
-            font-size: 48px;
-            font-weight: bold;
-            margin: 5px 0 0 0;
+            font-size: 64px;
+            font-weight: 800;
+            margin: 5px 0;
         }
+        .reset-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        /* Task Cards Layout */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .task-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            border-left: 5px solid #cbd5e1;
+        }
+        .task-info {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+        .task-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .task-pts {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .circle-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .btn-plus { background-color: #10b981; }
+        .btn-minus { background-color: #ef4444; }
+
+        /* General Adjustments Footer Section */
         .section-title {
             font-size: 16px;
             color: #475569;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 5px;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 12px;
             font-weight: bold;
         }
-        .btn-grid {
+        .reduction-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 8px;
         }
-        button {
-            padding: 12px;
+        .btn-penalty {
+            padding: 14px;
             font-size: 15px;
             font-weight: bold;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        button:active {
-            transform: scale(0.98);
-        }
-        .btn-positive {
-            background-color: #10b981;
-            color: white;
-        }
-        .btn-negative {
+            border-radius: 12px;
             background-color: #ef4444;
             color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .penalty-badge {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Dhruv's Tracker 🚀</h1>
+        <h1>Dhruv is winning 🚀</h1>
+        <p class="subtitle">Keep up the amazing work!</p>
 
-        <!-- Highlighted Daily Quote Section -->
+        <!-- Dynamic Daily Motivation Box -->
         <div class="quote-box">
             <p class="quote-title">Today's Motivation 🌟</p>
             <p id="daily-quote" class="quote-text">Loading inspiration...</p>
         </div>
 
-        <!-- Points Display -->
+        <!-- Point Tracker Header Box -->
         <div class="score-card">
             <div class="score-label">Total Points Balance</div>
             <div id="total-points" class="score-value">0</div>
+            <button class="reset-btn" onclick="resetPoints()">Reset Points</button>
         </div>
 
-        <!-- Positive Activities -->
-        <div class="section-title">Earn Points</div>
-        <div class="btn-grid">
-            <button class="btn-positive" onclick="updatePoints(10)">Completed Assignment (+10)</button>
-            <button class="btn-positive" onclick="updatePoints(5)">Good Practice Session (+5)</button>
-            <button class="btn-positive" onclick="updatePoints(5)">Helpful Behavior (+5)</button>
+        <!-- Main Task List with original individual actions -->
+        <div class="task-list">
+            <!-- Task 1 -->
+            <div class="task-card" style="border-left-color: #10b981;">
+                <div class="task-info">
+                    <div class="task-name">Put used clothes in bin</div>
+                    <div class="task-pts">+5 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-5)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(5)">+</button>
+                </div>
+            </div>
+
+            <!-- Task 2 -->
+            <div class="task-card" style="border-left-color: #ef4444;">
+                <div class="task-info">
+                    <div class="task-name">Keep your violin / music book in right spot</div>
+                    <div class="task-pts">+5 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-5)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(5)">+</button>
+                </div>
+            </div>
+
+            <!-- Task 3 -->
+            <div class="task-card" style="border-left-color: #f59e0b;">
+                <div class="task-info">
+                    <div class="task-name">Practice violin with focus for 40 mins</div>
+                    <div class="task-pts">+15 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-15)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(15)">+</button>
+                </div>
+            </div>
+
+            <!-- Task 4 -->
+            <div class="task-card" style="border-left-color: #a855f7;">
+                <div class="task-info">
+                    <div class="task-name">Practice music for 30 mins</div>
+                    <div class="task-pts">+15 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-15)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(15)">+</button>
+                </div>
+            </div>
+
+            <!-- Task 5 -->
+            <div class="task-card" style="border-left-color: #3b82f6;">
+                <div class="task-info">
+                    <div class="task-name">Exercise / Play outside for 40 mins</div>
+                    <div class="task-pts">+20 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-20)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(20)">+</button>
+                </div>
+            </div>
+
+            <!-- Task 6 -->
+            <div class="task-card" style="border-left-color: #10b981;">
+                <div class="task-info">
+                    <div class="task-name">Eat meals on time</div>
+                    <div class="task-pts">+10 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-10)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(10)">+</button>
+                </div>
+            </div>
+
+            <!-- Task 7 -->
+            <div class="task-card" style="border-left-color: #ef4444;">
+                <div class="task-info">
+                    <div class="task-name">Cleanup after each meal</div>
+                    <div class="task-pts">+5 pts</div>
+                </div>
+                <div class="action-btns">
+                    <button class="circle-btn btn-minus" onclick="updatePoints(-5)">-</button>
+                    <button class="circle-btn btn-plus" onclick="updatePoints(5)">+</button>
+                </div>
+            </div>
         </div>
 
-        <!-- Negative Adjustments -->
+        <!-- Separate Point Reduction Options Section -->
         <div class="section-title">Reduce Points</div>
-        <div class="btn-grid">
-            <button class="btn-negative" onclick="updatePoints(-10)">Missed Task (-10)</button>
-            <button class="btn-negative" onclick="updatePoints(-5)">Delayed Task (-5)</button>
-            <button class="btn-negative" onclick="updatePoints(-5)">Too much Screen time (-5)</button>
+        <div class="reduction-grid">
+            <button class="btn-penalty" onclick="updatePoints(-10)">
+                <span>Missed Task</span>
+                <span class="penalty-badge">-10 pts</span>
+            </button>
+            <button class="btn-penalty" onclick="updatePoints(-5)">
+                <span>Delayed Task</span>
+                <span class="penalty-badge">-5 pts</span>
+            </button>
+            <button class="btn-penalty" onclick="updatePoints(-5)">
+                <span>Too much Screen time</span>
+                <span class="penalty-badge">-5 pts</span>
+            </button>
         </div>
     </div>
 
     <script>
-        // Track core points balance
         let totalPoints = parseInt(localStorage.getItem('dhruv_points')) || 0;
         document.getElementById('total-points').innerText = totalPoints;
 
         function updatePoints(amount) {
             totalPoints += amount;
-            if (totalPoints < 0) totalPoints = 0; // Keeps total from going into negatives
-            
+            if (totalPoints < 0) totalPoints = 0;
             localStorage.setItem('dhruv_points', totalPoints);
             document.getElementById('total-points').innerText = totalPoints;
         }
 
-        // Kid-friendly motivational quotes (changes automatically daily)
+        function resetPoints() {
+            if(confirm("Reset points back to 0?")) {
+                totalPoints = 0;
+                localStorage.setItem('dhruv_points', totalPoints);
+                document.getElementById('total-points').innerText = totalPoints;
+            }
+        }
+
         const quotes = [
             "“Mistakes are proof that you are trying. Keep going!”",
             "“You don't have to be perfect to be amazing.”",
@@ -174,11 +347,10 @@
         const dayOfWeek = new Date().getDay(); 
         document.getElementById("daily-quote").innerText = quotes[dayOfWeek];
 
-        // Service Worker Registration for App Installation (using capital Sw.js)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('Sw.js')
-                .then(() => console.log('Service Worker Registered Successfully'))
-                .catch(err => console.log('Service Worker Failed to Register', err));
+                .then(() => console.log('Service Worker Active'))
+                .catch(err => console.log('Service Worker Error', err));
         }
     </script>
 
